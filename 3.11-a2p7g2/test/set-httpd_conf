@@ -30,3 +30,6 @@ s='#LoadModule rewrite_module'
 cat $F | grep "$s"; cat $F | grep "$s" | sed "s/$s/LoadModule rewrite_module/"; echo
 #sed -i 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf
 
+s='mod_rewrite.so'
+cat $F | grep "$s"; cat $F | grep "$s" | sed "s/$s/mod_rewrite.so\nLoadModule perl_module mod_perl.so/"; echo
+#sed -i 's/mod_rewrite.so/mod_rewrite.so\nLoadModule perl_module mod_perl.so/' /etc/apache2/httpd.conf

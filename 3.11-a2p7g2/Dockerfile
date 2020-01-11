@@ -2,12 +2,13 @@ FROM ptipd/uin-devs-alpine:3.11-apache2-php7
 
 MAINTAINER luxmile <luxmile@gmail.com>
 
-COPY base/lemonldap-ng-handler.tar.bz2 /var/cache/apk/
+COPY base/*.tar.bz2 /var/cache/apk/
 
 RUN printf "Build of ptipd/uin-ssos-alpine:3.11-apache2-php7-llng2, date: %s\n" `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
+    sed -i 's#mod_rewrite.so#mod_rewrite.so\nLoadModule perl_module module/mod_perl.so#' /etc/apache2/httpd.conf && \
     #
     # install required perl modules:
-    apk add perl-apache-session perl-cache-cache perl-config-inifiles perl-crypt-openssl-rsa \
+    apk add apache-mod-fcgid perl-apache-session perl-cache-cache perl-config-inifiles perl-crypt-openssl-rsa \
         perl-crypt-x509 perl-crypt-openssl-random perl-crypt-rijndael perl-html-template perl-json perl-plack perl-uri perl-libwww && \
     #
     # prepare lemon-ldap handler dirs:
@@ -31,6 +32,7 @@ RUN printf "Build of ptipd/uin-ssos-alpine:3.11-apache2-php7-llng2, date: %s\n" 
         /var/lib/lemonldap-ng/sessions/lock && \
     cd / && \
     tar jxf /var/cache/apk/lemonldap-ng-handler.tar.bz2 && \
+    tar jxf /var/cache/apk/apache2-mod_perl.tar.bz2 && \
     #
     # cleanup:
     rm -rf /var/cache/apk/*
