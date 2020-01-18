@@ -1,10 +1,10 @@
-FROM ptipd/uin-devs-alpine:3.11-apache2-php7
+FROM ptipd/uin-devs-alpine:1.1_3.11-apache2-php7
 
 MAINTAINER luxmile <luxmile@gmail.com>
 
 COPY base/*.tar.bz2 /var/cache/apk/
 
-RUN printf "Build of ptipd/uin-ssos-alpine:3.11-apache2-php7-llng2, date: %s\n" `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
+RUN printf "Build of ptipd/uin-ssos-alpine:1.1_3.11-apache2-php7-llng2, date: %s\n" `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
     sed -i 's#mod_rewrite.so#mod_rewrite.so\nLoadModule perl_module modules/mod_perl.so#' /etc/apache2/httpd.conf && \
     #
     # install required perl modules:
